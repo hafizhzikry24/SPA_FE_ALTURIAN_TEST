@@ -3,6 +3,8 @@ import LoginPage from '@/views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 import BlogLayout from '@/layouts/BlogLayout.vue'
 import BlogList from '@/views/BlogList.vue'
+import MyPosts from '@/views/MyPosts.vue' // Komponen untuk My Posts
+import OtherPosts from '@/views/OtherPosts.vue' // Komponen untuk Other Posts
 import PostView from '@/views/PostView.vue'
 
 const router = createRouter({
@@ -26,12 +28,22 @@ const router = createRouter({
         {
           path: '',
           name: 'blog',
-          component: BlogList,
+          component: BlogList, // Menampilkan daftar post secara umum
+        },
+        {
+          path: 'my-posts',
+          name: 'my-posts',
+          component: MyPosts, // Menampilkan post milik user
+        },
+        {
+          path: 'other-posts',
+          name: 'other-posts',
+          component: OtherPosts, // Menampilkan post dari orang lain
         },
         {
           path: 'post/:slug',
           name: 'post',
-          component: PostView,
+          component: PostView, // Menampilkan detail post
         },
       ],
     },

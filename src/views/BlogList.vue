@@ -19,12 +19,10 @@
 
             <div v-if="post.author.id === currentUser?.id" class="flex space-x-2">
             <!-- <div class="flex space-x-2"> -->
-              <button @click="editPost(post)" class="text-blue-500 hover:underline">edit
-                <i class="fas fa-edit"></i> 
-              </button>
-              <button @click="deletePost(post.id)" class="text-red-500 hover:underline">delete
-                <i class="fas fa-trash-alt"></i> 
-              </button>
+              <PencilIcon @click="editPost(post)" class="text-blue-500 hover:underline size-4">edit
+              </PencilIcon>
+              <TrashIcon @click="deletePost(post.id)" class="text-red-500 hover:underline size-4">delete
+              </TrashIcon>
             </div>
           </div>
           <p class="text-gray-600 mb-4">{{ post.body.substring(0, 200) }}...</p>
@@ -55,6 +53,7 @@
   import { ref, onMounted } from 'vue';
   import axios from '../axios';
   import PostForm from '@/components/PostForm.vue';
+import { PencilIcon, TrashIcon } from '@heroicons/vue/24/solid';
   
   const posts = ref([]);
   const isLoading = ref(true);

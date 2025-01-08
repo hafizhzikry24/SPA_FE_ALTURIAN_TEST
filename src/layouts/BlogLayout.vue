@@ -25,7 +25,7 @@
 
     const fetchUserData = async () => {
     try {
-        const response = await axios.get('/user'); // Ganti dengan endpoint API yang sesuai
+        const response = await axios.get('/user'); 
         userData.value = response.data.data;
     } catch (err) {
         console.error('Failed to fetch user data', err);

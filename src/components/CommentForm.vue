@@ -33,7 +33,7 @@
   
   <script setup>
   import { ref } from 'vue';
-  import axios from '../axios';
+  // import axios from '../axios';
   
   const props = defineProps({
     postId: {
@@ -52,11 +52,8 @@
   
     isSubmitting.value = true;
     try {
-      await axios.post(`/posts/${props.postId}/comments`, { 
-        body: commentBody.value 
-      });
+      emit('comment-added', { body: commentBody.value });
       commentBody.value = '';
-      emit('comment-added');
     } catch (error) {
       console.error('Error submitting comment:', error);
     } finally {
@@ -64,3 +61,4 @@
     }
   };
   </script>
+  

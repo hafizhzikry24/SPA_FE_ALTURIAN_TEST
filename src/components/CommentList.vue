@@ -59,6 +59,7 @@
 <script setup>
 import { ref } from "vue";
 import { BeakerIcon, PencilIcon, TrashIcon } from "@heroicons/vue/24/solid";
+import Swal from 'sweetalert2';
 
 const props = defineProps({
   comments: {
@@ -85,12 +86,24 @@ const cancelEdit = () => {
 
 const saveEdit = (comment) => {
   emit("update-comment", { ...comment, body: editedCommentBody.value });
+  Swal.fire('Updated!', 'Your comment has been updated.', 'success'); 
   cancelEdit();
 };
 
 const deleteComment = (commentId) => {
-  if (confirm("Are you sure you want to delete this comment?")) {
-    emit("delete-comment", commentId);
-  }
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      emit("delete-comment", commentId);
+      Swal.fire('Deleted!', 'Your comment has been deleted.', 'success');  
+    }
+  });
 };
 </script>

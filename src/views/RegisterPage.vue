@@ -84,59 +84,64 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
-  import axios from '../axios'
-  
-  const name = ref('')
-  const email = ref('')
-  const password = ref('')
-  const passwordConfirmation = ref('')
-  const error = ref('')
-  const success = ref('')
-  const isLoading = ref(false)
-  const validationErrors = ref({})
-  
-  const handleSubmit = async () => {
-    if (password.value !== passwordConfirmation.value) {
-      error.value = 'Passwords do not match'
-      return
-    }
-  
-    isLoading.value = true
-    error.value = ''
-    success.value = ''
-    validationErrors.value = {}
-  
-    try {
-      const response = await axios.post('/register', {
-        name: name.value,
-        email: email.value,
-        password: password.value,
-        password_confirmation: passwordConfirmation.value
-      })
-  
-      success.value = 'Registration successful'
-      localStorage.setItem('token', response.data.access_token)
-    } catch (err) {
-      if (err.response && err.response.data) {
-        if (err.response.data.errors) {
-          const errors = err.response.data.errors
-          validationErrors.value = Object.fromEntries(
-            Object.entries(errors).map(([field, messages]) => [field, messages[0]])
-          )
+import { ref } from 'vue'
+import axios from '../axios'
+import { useRouter } from 'vue-router'
 
-          setTimeout(() => {
-            validationErrors.value = {}
-          }, 3000)
-        } else {
-          error.value = err.response?.data?.message || 'An error occurred'
-        }
-      } else {
-        error.value = err.message || 'An error occurred'
-      }
-    } finally {
-      isLoading.value = false
-    }
+const router = useRouter()  // Menambahkan router
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const passwordConfirmation = ref('')
+const error = ref('')
+const success = ref('')
+const isLoading = ref(false)
+const validationErrors = ref({})
+
+const handleSubmit = async () => {
+  if (password.value !== passwordConfirmation.value) {
+    error.value = 'Passwords do not match'
+    return
   }
-  </script>
-  
+
+  isLoading.value = true
+  error.value = ''
+  success.value = ''
+  validationErrors.value = {}
+
+  try {
+    const response = await axios.post('/register', {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+      password_confirmation: passwordConfirmation.value
+    })
+
+    success.value = 'Registration successful'
+    localStorage.setItem('token', response.data.access_token)
+
+    router.push('/blog')
+
+  } catch (err) {
+    if (err.response && err.response.data) {
+      if (err.response.data.errors) {
+        const errors = err.response.data.errors
+        validationErrors.value = Object.fromEntries(
+          Object.entries(errors).map(([field, messages]) => [field, messages[0]])
+        )
+
+        setTimeout(() => {
+          validationErrors.value = {}
+        }, 3000)
+      } else {
+        error.value = err.response?.data?.message || 'An error occurred'
+      }
+    } else {
+      error.value = err.message || 'An error occurred'
+    }
+  } finally {
+    isLoading.value = false
+  }
+}
+</script>

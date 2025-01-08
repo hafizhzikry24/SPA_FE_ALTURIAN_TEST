@@ -42,7 +42,7 @@
     }
   });
   
-  const emit = defineEmits(['comment-added']);
+  const emit = defineEmits(['comment-added', "comment-refetch"]);
   
   const commentBody = ref('');
   const isSubmitting = ref(false);
@@ -54,6 +54,7 @@
     try {
       emit('comment-added', { body: commentBody.value });
       commentBody.value = '';
+      emit("comment-refetch")
     } catch (error) {
       console.error('Error submitting comment:', error);
     } finally {

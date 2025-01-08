@@ -1,9 +1,12 @@
 <template>
+  <div v-if="isLoadingAuth" class="fixed inset-0 bg-gray-50 bg-opacity-75 flex items-center justify-center z-50">
+    <div class="animate-spin border-t-4 border-blue-500 border-solid w-12 h-12 rounded-full"></div>
+  </div>
   <div v-if="!isLoadingAuth" class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
       <h1 class="text-2xl font-semibold text-gray-900 mb-2">Login</h1>
       <p class="text-gray-600 mb-6">Enter your credentials to access your account</p>
-      
+
       <form @submit.prevent="handleSubmit">
         <div class="space-y-6">
           <div>
@@ -59,6 +62,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { onMounted, ref } from 'vue'

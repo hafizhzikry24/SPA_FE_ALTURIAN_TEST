@@ -60,7 +60,7 @@ const props = defineProps({
   post: Object
 });
 
-const emit = defineEmits(['close', 'save']);
+const emit = defineEmits(['close', 'refetch']);
 
 const formData = ref({
   title: '',
@@ -87,7 +87,7 @@ const savePost = async () => {
     } else {
       await axios.post('/posts', formData.value);
     }
-    emit('save');
+    emit('refetch');
     emit('close');
   } catch (error) {
     console.error('Error saving post:', error);

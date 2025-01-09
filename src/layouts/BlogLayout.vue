@@ -3,8 +3,11 @@
       <header class="bg-white shadow">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
           <router-link to="/blog" class="text-xl font-semibold text-gray-900">Blog</router-link>
+          <div class="text-xs sm:text-lg ">
+            Hai!! {{ userData?.name }}
+          </div>
           <div>
-            <button @click="handleLogout" class="text-gray-700 hover:text-gray-900 mx-2">Logout</button>
+            <button @click="handleLogout" class="text-gray-700 hover:text-gray-900 mx-2 text-sm sm:text-lg">Logout</button>
           </div>
         </nav>
       </header>

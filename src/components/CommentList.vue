@@ -27,7 +27,7 @@
           </button>
         </div>
       </div>
-      
+
       <div v-else>
         <p class="text-gray-800 mb-2">{{ comment.body }}</p>
         <div class="flex justify-between items-center">
@@ -37,18 +37,22 @@
           </div>
           <div
             v-if="comment.author.id === currentUser?.id"
-            class="flex space-x-2 items-center"
+            class="flex space-x-3 items-center"
           >
-            <PencilIcon
+            <!-- <button
               @click="startEdit(comment)"
-              class="text-blue-500 hover:underline size-4"
-              >Edit</PencilIcon
+              class="text-green-500 hover:text-green-700 bg-green-100 hover:bg-emerald-200 p-2 rounded-lg"
+              title="Edit Comment"
             >
-            <TrashIcon
+              <PencilIcon class="size-3.5" />
+            </button> -->
+            <button
               @click="deleteComment(comment.id)"
-              class="size-4 text-red-500 hover:underline"
-              >Delete</TrashIcon
+              class="text-red-500 hover:text-red-700 bg-red-100 hover:bg-red-200 p-2 rounded-lg"
+              title="Delete Comment"
             >
+              <TrashIcon class="size-3.5" />
+            </button>
           </div>
         </div>
       </div>
@@ -59,7 +63,7 @@
 <script setup>
 import { ref } from "vue";
 import { BeakerIcon, PencilIcon, TrashIcon } from "@heroicons/vue/24/solid";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const props = defineProps({
   comments: {
@@ -86,23 +90,23 @@ const cancelEdit = () => {
 
 const saveEdit = (comment) => {
   emit("update-comment", { ...comment, body: editedCommentBody.value });
-  Swal.fire('Updated!', 'Your comment has been updated.', 'success'); 
+  Swal.fire("Updated!", "Your comment has been updated.", "success");
   cancelEdit();
 };
 
 const deleteComment = (commentId) => {
   Swal.fire({
-    title: 'Are you sure?',
+    title: "Are you sure?",
     text: "You won't be able to revert this!",
-    icon: 'warning',
+    icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!',
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
       emit("delete-comment", commentId);
-      Swal.fire('Deleted!', 'Your comment has been deleted.', 'success');  
+      Swal.fire("Deleted!", "Your comment has been deleted.", "success");
     }
   });
 };

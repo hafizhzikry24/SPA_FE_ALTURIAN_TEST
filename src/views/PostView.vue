@@ -18,7 +18,7 @@
       By {{ post.author.name }} |
       {{ new Date(post.created_at).toLocaleDateString() }}
     </div>
-    <div class="prose max-w-none mb-8" v-html="post.body"></div>
+    <div class="prose max-w-none mb-8 overflow-hidden break-words" v-html="post.body"></div>
     <CommentContainer :postId="post.id" :currentUser="userData" />
   </div>
 </template>

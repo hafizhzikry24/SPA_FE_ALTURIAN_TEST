@@ -18,6 +18,10 @@ npm install
 npm run dev
 ```
 
+you must create an account first or you can login with 
+email : sasuke@example.com
+password : sakuraharuno
+
 ### Compile and Minify for Production
 
 ```sh
